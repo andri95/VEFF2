@@ -61,25 +61,34 @@
                     var displayRows = response.data.board.rows;
                     var displayCols = response.data.board.cols;
                     var placeMines = response.data.board.minePositions;
+                    var mineCount = response.data.board.mines;
+                    var mineArray = [];
                     var boardArry = [];
                     document.getElementById("game").innerHTML = "";
+                    console.log("MINES ", placeMines);
                     for(var i = 0; i <= displayRows - 1; i++){
                         for(var j = 0; j <= displayCols - 1; j++){
                             var currentButton = document.createElement("button");
-                            var id = i + ',' + j;
+                            var id = [i,j];
                             currentButton.setAttribute("id", id);
                             currentButton.setAttribute('class', 'box');
-                            currentButton.setAttribute('onClick', checkStatus(this.id));
-                            //currentButton.addEventListener('click', checkStatus);
-                            container.appendChild(currentButton);
-                            boardArry.push([i,j]);
-                            //console.log("Rows :",i," cols: " ,j);
+                            noContext = currentButton;
+                            noContext.addEventListener('contextmenu', e => {
+                                e.preventDefault();
+                            });
+                            currentButton.setAttribute('onClick', 'checkClick(this.id, this.mineArray)');
                             
+                            container.appendChild(currentButton);
+                            boardArry.push([i,j]);   
                         }
                         var newLine = document.createElement("br");
                         container.appendChild(newLine);
                     }
-                    console.log(boardArry);
+                    for(var x = 0; x<mineCount; x++){
+                        mineArray.push(placeMines[x]);
+                    }
+                    console.log("Mine ARRAY",mineArray);
+                    console.log("Board ARRAY",boardArry);
                 })
                 .catch(function (error) {
                     //When unsuccessful, print the error.
@@ -90,8 +99,15 @@
                 });
         }
 
-        function checkStatus(clicked_id){
-            console.log('virkar')
+        function checkClick(clicked_id, minecheck){
+            console.log(clicked_id);
+            console.log("mineCheck", minecheck);
+            if(event.which == 1){
+                console.log('vinstri')
+            }
+            if(event.which == 3){
+                console.log('hægri')
+            }
         }
         
     </script>
