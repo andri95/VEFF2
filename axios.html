@@ -13,9 +13,9 @@
     <div class="menu">
         <h1>MINESWEEPAH</h1>
         <br>
-        <input type="text" placeholder="Rows..." id="rows">
-        <input type="text" placeholder="Columns..." id="cols">
-        <input type="text" placeholder="Mines..." id="mines">
+        <input type="text" placeholder="Rows..." onfocus="this.value=''" id="rows">
+        <input type="text" placeholder="Columns..." onfocus="this.value=''" id="cols">
+        <input type="text" placeholder="Mines..." onfocus="this.value=''" id="mines">
         <!-- Clicking this button calls doAjax(), which will do an AJAX request -->
         <button type="button" onclick="doAjax()">Get Board!</button>
     </div>
@@ -62,6 +62,7 @@
                     var displayCols = response.data.board.cols;
                     var placeMines = response.data.board.minePositions;
                     var boardArry = [];
+                    document.getElementById("game").innerHTML = "";
                     console.log("MINES ", placeMines);
                     for(var i = 0; i <= displayRows - 1; i++){
                         for(var j = 0; j <= displayCols - 1; j++){
@@ -69,13 +70,13 @@
                             var id = i + ',' + j;
                             currentButton.setAttribute("id", id);
                             currentButton.setAttribute('class', 'box');
-                            currentButton.setAttribute('onClick', checkStatus(this.id));
-                            //currentButton.addEventListener('click', checkStatus);
+                            noContext = currentButton;
+                            noContext.addEventListener('contextmenu', e => {
+                                e.preventDefault();
+                            });
+                            currentButton.setAttribute('onClick', 'checkClick(this.id)');
                             container.appendChild(currentButton);
-                            boardArry.push([i,j]);
-                            //console.log("Rows :",i," cols: " ,j);
-                            
-                            
+                            boardArry.push([i,j]);   
                         }
                         var newLine = document.createElement("br");
                         container.appendChild(newLine);
@@ -90,8 +91,14 @@
                 });
         }
 
-        function checkStatus(clicked_id){
-            console.log('virkar')
+        function checkClick(clicked_id){
+            console.log(clicked_id)
+            if(event.which == 1){
+                console.log('vinstri')
+            }
+            if(event.which == 3){
+                console.log('hægri')
+            }
         }
         
     </script>
