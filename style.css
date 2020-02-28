@@ -12,6 +12,7 @@ body{
     height: 20px;
     border: 1px solid;
     margin-right: 2px;
-    background-color: #BFBFBF;;
+    background-color: #BFBFBF;
+    cursor: pointer;
 }
 

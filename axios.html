@@ -13,9 +13,9 @@
     <div class="menu">
         <h1>MINESWEEPAH</h1>
         <br>
-        <input type="text" placeholder="Rows..." id="rows">
-        <input type="text" placeholder="Columns..." id="cols">
-        <input type="text" placeholder="Mines..." id="mines">
+        <input type="text" placeholder="Rows..." onfocus="this.value=''" id="rows">
+        <input type="text" placeholder="Columns..." onfocus="this.value=''" id="cols">
+        <input type="text" placeholder="Mines..." onfocus="this.value=''" id="mines">
         <!-- Clicking this button calls doAjax(), which will do an AJAX request -->
         <button type="button" onclick="doAjax()">Get Board!</button>
     </div>
@@ -62,7 +62,7 @@
                     var displayCols = response.data.board.cols;
                     var placeMines = response.data.board.minePositions;
                     var boardArry = [];
-                    console.log("MINES ", placeMines);
+                    document.getElementById("game").innerHTML = "";
                     for(var i = 0; i <= displayRows - 1; i++){
                         for(var j = 0; j <= displayCols - 1; j++){
                             var currentButton = document.createElement("button");
