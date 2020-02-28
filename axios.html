@@ -66,7 +66,11 @@
                     for(var i = 0; i <= displayRows - 1; i++){
                         for(var j = 0; j <= displayCols - 1; j++){
                             var currentButton = document.createElement("button");
-                            currentButton.setAttribute("id", "box");
+                            var id = i + ',' + j;
+                            currentButton.setAttribute("id", id);
+                            currentButton.setAttribute('class', 'box');
+                            currentButton.setAttribute('onClick', checkStatus(this.id));
+                            //currentButton.addEventListener('click', checkStatus);
                             container.appendChild(currentButton);
                             boardArry.push([i,j]);
                             //console.log("Rows :",i," cols: " ,j);
@@ -84,6 +88,10 @@
                 .then(function () {
                     // This code is always executed, independent of whether the request succeeds or fails.
                 });
+        }
+
+        function checkStatus(clicked_id){
+            console.log('virkar')
         }
         
     </script>
