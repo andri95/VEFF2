@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Axios example</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <!-- We need to import Axios in order to be able to use the axios object below -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="menu">
+        <h1>MINESWEEPAH</h1>
+        <br>
+        <input type="text" placeholder="Rows..." id="rows">
+        <input type="text" placeholder="Columns..." id="cols">
+        <input type="text" placeholder="Mines..." id="mines">
+        <!-- Clicking this button calls doAjax(), which will do an AJAX request -->
+        <button type="button" onclick="doAjax()">Get Board!</button>
+    </div>
+    <div id="game">
+
+    </div>
+
+    <script>
+        function doAjax() {
+            // object created with input text as attributes
+            var board = {
+                rows: document.getElementById("rows").value,
+                cols: document.getElementById("cols").value,
+                mines: document.getElementById("mines").value,
+            };
+
+            function validateBoard(){
+                var keys = Object.values(board);
+                for(var key of keys){
+                    if(isNaN(key) || key > 40){
+                        console.log(key);
+                        board.rows = 10;
+                        board.cols = 10;
+                        board.mines = 10;
+                        break;
+                    } else {
+                        continue;
+                    }
+                }
+            };
+            validateBoard();
+
+            //The URL to which we will send the request
+            url = 'https://veff213-minesweeper.herokuapp.com/api/v1/minesweeper'
+
+            //Perform an AJAX POST request to the url, and set the param 'myParam' in the request body to paramValue
+            axios.post(url, { rows: board.rows, cols: board.cols, mines: board.mines })
+                .then(function (response) {
+                    //When successful, print 'Success: ' and the received data
+                    console.log("Success: ", response.data);
+                    var container = document.getElementById("game");
+                    var displayRows = response.data.board.rows;
+                    var displayCols = response.data.board.cols;
+                    for(var i = 0; i <= displayRows - 1; i++){
+                        for(var j = 0; j <= displayCols - 1; j++){
+                            var currentButton = document.createElement("button");
+                            currentButton.setAttribute("id", "box");
+                            container.appendChild(currentButton);
+                        }
+                        var newLine = document.createElement("br");
+                        container.appendChild(newLine);
+                    }
+                })
+                .catch(function (error) {
+                    //When unsuccessful, print the error.
+                    console.log(error);
+                })
+                .then(function () {
+                    // This code is always executed, independent of whether the request succeeds or fails.
+                });
+        }
+        
+    </script>
+</body>
+
+</html>
