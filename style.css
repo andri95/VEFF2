@@ -7,16 +7,22 @@ body{
     text-align: center;
 }
 
+br{
+    display: block;
+    margin-bottom: -1px;
+}
+
 .box{
     width: 20px;
     height: 20px;
-    border: 1px solid;
-    margin-right: 2px;
-    background-color: #BFBFBF;;
+    background-color: #bdbdbd;
+    cursor: pointer;
+    box-shadow: 1px 1px #7b7b7b, 0 0 1px 1px #ffffff;
 }
 
 .bomb{
     background-image: url('bomb.png');
+    background-color: red;
     background-repeat: no-repeat;
     background-size: cover;
 }

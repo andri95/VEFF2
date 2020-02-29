@@ -98,6 +98,7 @@
                         var currElement = document.getElementById(currid);
                         if(intList[0] === placeMines[i][0] && intList[1] === placeMines[i][1]){
                             currElement.classList.add('bomb');
+                            revealBombs(placeMines);
                         } else {
                             currElement.classList.add('nobomb');
                         }
@@ -109,11 +110,20 @@
                 }
             }
 
+            function revealBombs(placeMines){
+                for(var i = 0; i < placeMines.length; i++){
+                    var currid = placeMines[i].toString();
+                    var currElement = document.getElementById(currid);
+                    currElement.classList.add('bomb');
+                }
+                if(setTimeout(function(){ confirm("YOU LOST!\nPlay again?"); }, 2000) == true){
+                    console.log('herna')
+                    document.getElementById("game").innerHTML = "";
+                };
+            }
+
         }
 
-        function updateLeft(clicked_id){
-
-        }
     </script>
 </body>
 
