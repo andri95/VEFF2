@@ -81,41 +81,38 @@
                     var id = i + ',' + j;
                     currentButton.setAttribute("id", id);
                     currentButton.setAttribute('class', 'box');
-                    currentButton.addEventListener('contextmenu', e => {
-                        e.preventDefault();
-                    });
-                    currentButton.addEventListener('click', e => {
-                        checkClick(e.target.id, placeMines)
-                    });
+                    currentButton.addEventListener('click', checkClick, false);
+                    currentButton.addEventListener('contextmenu', checkClick, false)
                     container.appendChild(currentButton);
                     boardArry.push([i,j]);   
                 }
                 var newLine = document.createElement("br");
                 container.appendChild(newLine);
             }
-            for(var x = 0; x<mineCount; x++){
-                mineArray.push(placeMines[x]);
-            }
-            console.log("ARRAY",mineArray)
-        }
 
-        function checkClick(clicked_id, placeMines){
-            var idList = clicked_id.split(',');
-            var intList = idList.map(Number);
-            var bombImg = document.createElement("IMG");
-            if(event.which === 1){
-                for(var i = 0; i < placeMines.length; i++){
-                    console.log(intList, placeMines[i])
-                    if(intList[0] === placeMines[i][0] && intList[1] === placeMines[i][1]){
-                        console.log('Bomb!')
-                        //alert("GAME OVER !")
+            function checkClick(e){
+                e.preventDefault();
+                var currid = e.target.id
+                var idList = currid.split(',');
+                var intList = idList.map(Number);
+                if(event.which === 1){
+                    for(var i = 0; i < placeMines.length; i++){
+                        var currElement = document.getElementById(currid);
+                        if(intList[0] === placeMines[i][0] && intList[1] === placeMines[i][1]){
+                            currElement.classList.add('bomb');
+                        } else {
+                            currElement.classList.add('nobomb');
+                        }
                     }
                 }
+                if(event.which === 3){
+                    var currElement = document.getElementById(currid);
+                    currElement.classList.add('flag');
+                }
             }
-            if(event.which === 3){
-                console.log('hægri')
-            }
+
         }
+
         function updateLeft(clicked_id){
 
         }
