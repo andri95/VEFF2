@@ -116,10 +116,9 @@
                     var currElement = document.getElementById(currid);
                     currElement.classList.add('bomb');
                 }
-                if(setTimeout(function(){ confirm("YOU LOST!\nPlay again?"); }, 2000) == true){
-                    console.log('herna')
+                if(window.alert("YOU LOST!")){
                     document.getElementById("game").innerHTML = "";
-                };
+                }
             }
 
         }
