@@ -20,6 +20,10 @@ br{
     box-shadow: 1px 1px #7b7b7b, 0 0 1px 1px #ffffff;
 }
 
+.avoid-clicks {
+    pointer-events: none;
+  }
+
 .bomb{
     background-image: url('bomb.png');
     background-color: red;
@@ -28,7 +32,7 @@ br{
 }
 
 .nobomb{
-    background-color: red;
+    background-color: #e9e9e9;
 }
 
 .flag{
