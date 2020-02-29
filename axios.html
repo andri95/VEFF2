@@ -79,11 +79,12 @@
                     var id = i + ',' + j;
                     currentButton.setAttribute("id", id);
                     currentButton.setAttribute('class', 'box');
-                    //noContext = currentButton;
                     currentButton.addEventListener('contextmenu', e => {
                         e.preventDefault();
                     });
-                    currentButton.setAttribute('onClick', 'checkClick(this.id)');
+                    currentButton.addEventListener('click', e => {
+                        checkClick(e.target.id, placeMines)
+                    });
                     container.appendChild(currentButton);
                     boardArry.push([i,j]);   
                 }
@@ -92,12 +93,18 @@
             }
         }
 
-        function checkClick(clicked_id){
-            console.log(clicked_id)
-            if(event.which == 1){
-                console.log('vinstri')
+        function checkClick(clicked_id, placeMines){
+            var idList = clicked_id.split(',');
+            var intList = idList.map(Number);
+            if(event.which === 1){
+                for(var i = 0; i < placeMines.length; i++){
+                    console.log(intList, placeMines[i])
+                    if(intList[0] === placeMines[i][0] && intList[1] === placeMines[i][1]){
+                        console.log('Bomb!')
+                    }
+                }
             }
-            if(event.which == 3){
+            if(event.which === 3){
                 console.log('hægri')
             }
         }
