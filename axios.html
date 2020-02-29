@@ -54,42 +54,7 @@
 
             //Perform an AJAX POST request to the url, and set the param 'myParam' in the request body to paramValue
             axios.post(url, { rows: board.rows, cols: board.cols, mines: board.mines })
-                .then(function (response) {
-                    //When successful, print 'Success: ' and the received data
-                    console.log("Success: ", response.data);
-                    var container = document.getElementById("game");
-                    var displayRows = response.data.board.rows;
-                    var displayCols = response.data.board.cols;
-                    var placeMines = response.data.board.minePositions;
-                    var mineCount = response.data.board.mines;
-                    var mineArray = [];
-                    var boardArry = [];
-                    document.getElementById("game").innerHTML = "";
-                    console.log("MINES ", placeMines);
-                    for(var i = 0; i <= displayRows - 1; i++){
-                        for(var j = 0; j <= displayCols - 1; j++){
-                            var currentButton = document.createElement("button");
-                            var id = [i,j];
-                            currentButton.setAttribute("id", id);
-                            currentButton.setAttribute('class', 'box');
-                            noContext = currentButton;
-                            noContext.addEventListener('contextmenu', e => {
-                                e.preventDefault();
-                            });
-                            currentButton.setAttribute('onClick', 'checkClick(this.id, this.mineArray)');
-                            
-                            container.appendChild(currentButton);
-                            boardArry.push([i,j]);   
-                        }
-                        var newLine = document.createElement("br");
-                        container.appendChild(newLine);
-                    }
-                    for(var x = 0; x<mineCount; x++){
-                        mineArray.push(placeMines[x]);
-                    }
-                    console.log("Mine ARRAY",mineArray);
-                    console.log("Board ARRAY",boardArry);
-                })
+                .then(function(response) {processAjax(response);})
                 .catch(function (error) {
                     //When unsuccessful, print the error.
                     console.log(error);
@@ -97,6 +62,43 @@
                 .then(function () {
                     // This code is always executed, independent of whether the request succeeds or fails.
                 });
+        }
+        function processAjax(response){
+            //When successful, print 'Success: ' and the received data
+            console.log("Success: ", response.data);
+            var container = document.getElementById("game");
+            var displayRows = response.data.board.rows;
+            var displayCols = response.data.board.cols;
+            var placeMines = response.data.board.minePositions;
+            var mineCount = response.data.board.mines
+            var boardArry = [];
+            var mineArray = [];
+            document.getElementById("game").innerHTML = "";
+            console.log("MINES ", placeMines);
+            for(var i = 0; i <= displayRows - 1; i++){
+                for(var j = 0; j <= displayCols - 1; j++){
+                    var currentButton = document.createElement("button");
+                    var id = i + ',' + j;
+                    currentButton.setAttribute("id", id);
+                    currentButton.setAttribute('class', 'box');
+                    //noContext = currentButton;
+                    currentButton.addEventListener('contextmenu', e => {
+                        e.preventDefault();
+                    });
+                    //currentButton.setAttribute('onClick', 'checkClick(this.id, mineArray)');
+                    currentButton.addEventListener('click', e =>{
+                        checkClick(id, mineArray);
+                    } );
+                    container.appendChild(currentButton);
+                    boardArry.push([i,j]);   
+                }
+                var newLine = document.createElement("br");
+                container.appendChild(newLine);
+            }
+            for(var x = 0; x<mineCount; x++){
+                mineArray.push(placeMines[x]);
+            }
+            console.log("ARRAY",mineArray)
         }
 
         function checkClick(clicked_id, minecheck){
@@ -109,7 +111,9 @@
                 console.log('hægri')
             }
         }
-        
+        function updateLeft(clicked_id){
+
+        }
     </script>
 </body>
 
