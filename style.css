@@ -27,8 +27,8 @@ br{
 }
 
 .box{
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     background-color: #bdbdbd;
     cursor: pointer;
     box-shadow: 1px 1px #7b7b7b, 0 0 1px 1px #ffffff;
