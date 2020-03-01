@@ -67,6 +67,7 @@
             //When successful, print 'Success: ' and the received data
             console.log("Success: ", response.data);
             var container = document.getElementById("game");
+            container.classList.remove('avoid-clicks');
             var displayRows = response.data.board.rows;
             var displayCols = response.data.board.cols;
             var placeMines = response.data.board.minePositions;
@@ -95,15 +96,17 @@
                 var currid = e.target.id
                 var idList = currid.split(',');
                 var intList = idList.map(Number);
+                var currElement = document.getElementById(currid);
                 if(event.which === 1){
+                    var flag = false
                     for(var i = 0; i < placeMines.length; i++){
-                        var currElement = document.getElementById(currid);
                         if(intList[0] === placeMines[i][0] && intList[1] === placeMines[i][1]){
-                            currElement.classList.add('bomb');
+                            flag = true
                             revealBombs(placeMines);
-                        } else {
-                            currElement.classList.add('nobomb');
-                        }
+                        } 
+                    }
+                    if (!flag){
+                        currElement.classList.add('nobomb');
                     }
                 }
                 if(event.which === 3){
@@ -119,8 +122,11 @@
                     currElement.classList.add('bomb');
                 }
                 if(window.alert("YOU LOST!")){
+                    console.log('herna')
                     document.getElementById("game").innerHTML = "";
                 }
+                var gameContainer = document.getElementById('game');
+                gameContainer.classList.add('avoid-clicks');
             }
 
         }
