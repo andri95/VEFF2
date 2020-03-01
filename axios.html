@@ -75,6 +75,7 @@
             var mineCount = response.data.board.mines
             var boardArry = [];
             var mineArray = [];
+            var tempIdList = [];
             document.getElementById("game").innerHTML = "";
             console.log("MINES ", placeMines);
             for(var i = 0; i <= displayRows - 1; i++){
@@ -123,7 +124,8 @@
                 } else {
                     var currElement = document.getElementById(currid);
                     currElement.classList.add('nobomb');
-                    checkNeighbours(intList);
+                    checkNeighbours(intList, currid);
+                    checkWin(intList, boardArry, placeMines);
                 }
             }
 
@@ -135,7 +137,7 @@
                 }
             }
 
-            function checkNeighbours(intList){
+            function checkNeighbours(intList, currid){
                 var mineCounter = 0;
                 for(var i = intList[0] - 1; i <= intList[0] + 1; i++){
                     for(var j = intList[1] - 1; j <= intList[1] + 1; j++){
@@ -148,6 +150,18 @@
                         }
                     }
                 }
+                var number = document.getElementById(currid);
+                if(mineCounter > 0){
+                    if(mineCounter  === 1){
+                        number.classList.add('blue');
+                    } else if (mineCounter === 2){
+                        number.classList.add('green');
+                    } else {
+                        number.classList.add('red');
+                    }
+                number.setAttribute('content', 'mineCounter');
+                number.innerHTML = mineCounter;
+                }
             }
 
             function revealBombs(placeMines){
@@ -159,6 +173,20 @@
                 setTimeout(function(){ alert("YOU LOST"); }, 1000);
                 var gameContainer = document.getElementById('game');
                 gameContainer.classList.add('avoid-clicks');
+            }
+
+            function checkWin(intList, boardArry, placeMines){
+                tempIdList.push(intList);
+                if(tempIdList.length === (boardArry.length - placeMines.length)){
+                    setTimeout(function(){ alert("Winner Winner Chicken Dinner"); }, 1000);
+                    var gameContainer = document.getElementById('game');
+                    gameContainer.classList.add('avoid-clicks');
+                }
+
+                    
+                
+                
+
             }
 
         }
