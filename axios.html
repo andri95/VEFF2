@@ -72,7 +72,10 @@
             var displayRows = response.data.board.rows;
             var displayCols = response.data.board.cols;
             var placeMines = response.data.board.minePositions;
+            var mineCount = response.data.board.mines
             var boardArry = [];
+            var mineArray = [];
+            var tempIdList = [];
             document.getElementById("game").innerHTML = "";
             console.log("MINES ", placeMines);
             for(var i = 0; i <= displayRows - 1; i++){
@@ -122,6 +125,7 @@
                     if(!currElement.classList.contains('flag')){
                         //var currElement = document.getElementById(currid);
                         checkNeighbours(intList, currid);
+                        checkWin(intList, boardArry, placeMines);
                     }
                 }
             }
@@ -183,6 +187,15 @@
                 setTimeout(function(){ alert("YOU LOST"); }, 1000);
                 var gameContainer = document.getElementById('game');
                 gameContainer.classList.add('avoid-clicks');
+            }
+
+            function checkWin(intList, boardArry, placeMines){
+                tempIdList.push(intList);
+                if(tempIdList.length === (boardArry.length - placeMines.length)){
+                    setTimeout(function(){ alert("Winner Winner Chicken Dinner"); }, 1000);
+                    var gameContainer = document.getElementById('game');
+                    gameContainer.classList.add('avoid-clicks');
+                }
             }
 
         }
