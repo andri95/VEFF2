@@ -121,7 +121,7 @@
                 } else {
                     var currElement = document.getElementById(currid);
                     currElement.classList.add('nobomb');
-                    checkNeighbours(intList);
+                    checkNeighbours(intList, currid);
                 }
             }
 
@@ -133,7 +133,7 @@
                 }
             }
 
-            function checkNeighbours(intList){
+            function checkNeighbours(intList, currid){
                 var mineCounter = 0;
                 for(var i = intList[0] - 1; i <= intList[0] + 1; i++){
                     for(var j = intList[1] - 1; j <= intList[1] + 1; j++){
@@ -145,6 +145,18 @@
                             continue;
                         }
                     }
+                }
+                var number = document.getElementById(currid);
+                if(mineCounter > 0){
+                    if(mineCounter  === 1){
+                        number.classList.add('blue');
+                    } else if (mineCounter === 2){
+                        number.classList.add('green');
+                    } else {
+                        number.classList.add('red');
+                    }
+                number.setAttribute('content', 'mineCounter');
+                number.innerHTML = mineCounter;
                 }
             }
 

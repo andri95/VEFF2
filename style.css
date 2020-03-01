@@ -55,3 +55,22 @@ br{
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.blue{
+    font-family: 'Press Start 2P';
+    font-size: 8px;
+    color: blue;
+}
+
+.green{
+    font-family: 'Press Start 2P';
+    font-size: 8px;
+    color: green;
+}
+
+.red{
+    font-family: 'Press Start 2P';
+    font-size: 8px;
+    color: red;
+}
+
