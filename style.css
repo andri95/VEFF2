@@ -32,6 +32,7 @@ br{
     background-color: #bdbdbd;
     cursor: pointer;
     box-shadow: 1px 1px #7b7b7b, 0 0 1px 1px #ffffff;
+    vertical-align: top;
 }
 
 .avoid-clicks {
@@ -56,21 +57,19 @@ br{
     background-size: cover;
 }
 
-.blue{
+.number{
     font-family: 'Press Start 2P';
-    font-size: 8px;
+    font-size: 10px;
+}
+.blue{
     color: blue;
 }
 
 .green{
-    font-family: 'Press Start 2P';
-    font-size: 8px;
     color: green;
 }
 
 .red{
-    font-family: 'Press Start 2P';
-    font-size: 8px;
     color: red;
 }
 

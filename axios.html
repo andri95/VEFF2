@@ -104,7 +104,7 @@
             function processRightClick(currid){
                 var currElement = document.getElementById(currid);
                 if (!currElement.classList.contains('nobomb')){
-                    if(!currElement.classList.contains('flag')){
+                    if(!currElement.classList.contains('flag') && !currElement.classList.contains('number')){
                         currElement.classList.add('flag');
                     } else {
                         currElement.classList.remove('flag');
@@ -119,9 +119,10 @@
                 if(isBomb(intList)){
                     revealBombs(placeMines);
                 } else {
-                    var currElement = document.getElementById(currid);
-                    currElement.classList.add('nobomb');
-                    checkNeighbours(intList, currid);
+                    if(!currElement.classList.contains('flag')){
+                        //var currElement = document.getElementById(currid);
+                        checkNeighbours(intList, currid);
+                    }
                 }
             }
 
@@ -140,23 +141,36 @@
                         var currentElementid = [i, j];
                         if(isBomb(currentElementid)){
                             mineCounter = mineCounter + 1;
-                            console.log(mineCounter);
                         } else {
                             continue;
                         }
                     }
                 }
-                var number = document.getElementById(currid);
+                var curr = document.getElementById(currid);
                 if(mineCounter > 0){
+                    curr.classList.add('number');
                     if(mineCounter  === 1){
-                        number.classList.add('blue');
+                        curr.classList.add('blue');
                     } else if (mineCounter === 2){
-                        number.classList.add('green');
+                        curr.classList.add('green');
                     } else {
-                        number.classList.add('red');
+                        curr.classList.add('red');
                     }
-                number.setAttribute('content', 'mineCounter');
-                number.innerHTML = mineCounter;
+                    curr.innerHTML = mineCounter;
+                } else {
+                    curr.classList.add('nobomb');
+                    emptySquare(intList, currid);
+                }
+            }
+
+            function emptySquare(intList, currid){
+                for(var i = intList[0] - 1; i <= intList[0] + 1; i++){
+                    for(var j = intList[1] - 1; j <= intList[1] + 1; j++){
+                        var currentElementid = i + ',' + j;
+                        checkNeighbours([i, j], currentElementid);
+                        var currElement = document.getElementById(currentElementid);
+                        currElement.classList.add('nobomb');
+                    }
                 }
             }
 
