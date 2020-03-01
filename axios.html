@@ -93,35 +93,39 @@
             function checkClick(e){
                 e.preventDefault();
                 var currid = e.target.id
-                var idList = currid.split(',');
-                var intList = idList.map(Number);
-                var currElement = document.getElementById(currid);
                 if(event.which === 1){
-                    var flag = false
-                    for(var i = 0; i < placeMines.length; i++){
-                        if(intList[0] === placeMines[i][0] && intList[1] === placeMines[i][1]){
-                            flag = true
-                            revealBombs(placeMines);
-                        } 
-                    }
-                    if (!flag){
-                        currElement.classList.add('nobomb');
-                    }
+                    processLeftClick(currid);
                 }
                 if(event.which === 3){
-                    var currElement = document.getElementById(currid);
-                    if (!currElement.classList.contains('nobomb')){
-                        if(!currElement.classList.contains('flag')){
-                            currElement.classList.add('flag');
-                        } else {
-                            currElement.classList.remove('flag');
-                        }
+                    processRightClick(currid);
+                }
+            }
+
+            function processRightClick(currid){
+                var currElement = document.getElementById(currid);
+                if (!currElement.classList.contains('nobomb')){
+                    if(!currElement.classList.contains('flag')){
+                        currElement.classList.add('flag');
+                    } else {
+                        currElement.classList.remove('flag');
                     }
                 }
             }
 
-            function processClick(){
-                
+            function processLeftClick(currid){
+                var idList = currid.split(',');
+                var intList = idList.map(Number);
+                var currElement = document.getElementById(currid);
+                var flag = false
+                for(var i = 0; i < placeMines.length; i++){
+                    if(intList[0] === placeMines[i][0] && intList[1] === placeMines[i][1]){
+                        flag = true
+                        revealBombs(placeMines);
+                    } 
+                }
+                if (!flag){
+                    currElement.classList.add('nobomb');
+                }
             }
 
             function revealBombs(placeMines){
