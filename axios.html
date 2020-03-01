@@ -118,15 +118,35 @@
                 var idList = currid.split(',');
                 var intList = idList.map(Number);
                 var currElement = document.getElementById(currid);
-                var flag = false
+                if(isBomb(intList)){
+                    revealBombs(placeMines);
+                } else {
+                    var currElement = document.getElementById(currid);
+                    currElement.classList.add('nobomb');
+                    checkNeighbours(intList);
+                }
+            }
+
+            function isBomb(intList){
                 for(var i = 0; i < placeMines.length; i++){
                     if(intList[0] === placeMines[i][0] && intList[1] === placeMines[i][1]){
-                        flag = true
-                        revealBombs(placeMines);
+                        return true;
                     } 
                 }
-                if (!flag){
-                    currElement.classList.add('nobomb');
+            }
+
+            function checkNeighbours(intList){
+                var mineCounter = 0;
+                for(var i = intList[0] - 1; i <= intList[0] + 1; i++){
+                    for(var j = intList[1] - 1; j <= intList[1] + 1; j++){
+                        var currentElementid = [i, j];
+                        if(isBomb(currentElementid)){
+                            mineCounter = mineCounter + 1;
+                            console.log(mineCounter);
+                        } else {
+                            continue;
+                        }
+                    }
                 }
             }
 
