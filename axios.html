@@ -5,13 +5,14 @@
     <title>Axios example</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet"> 
     <!-- We need to import Axios in order to be able to use the axios object below -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
     <div class="menu">
-        <h1>MINESWEEPAH</h1>
+        <h1>MINESWEEPER</h1>
         <br>
         <input type="text" placeholder="Rows..." onfocus="this.value=''" id="rows">
         <input type="text" placeholder="Columns..." onfocus="this.value=''" id="cols">
@@ -109,8 +110,18 @@
                 }
                 if(event.which === 3){
                     var currElement = document.getElementById(currid);
-                    currElement.classList.add('flag');
+                    if (!currElement.classList.contains('nobomb')){
+                        if(!currElement.classList.contains('flag')){
+                            currElement.classList.add('flag');
+                        } else {
+                            currElement.classList.remove('flag');
+                        }
+                    }
                 }
+            }
+
+            function processClick(){
+                
             }
 
             function revealBombs(placeMines){
@@ -119,10 +130,7 @@
                     var currElement = document.getElementById(currid);
                     currElement.classList.add('bomb');
                 }
-                if(window.alert("YOU LOST!")){
-                    console.log('herna')
-                    document.getElementById("game").innerHTML = "";
-                }
+                setTimeout(function(){ alert("YOU LOST"); }, 1000);
                 var gameContainer = document.getElementById('game');
                 gameContainer.classList.add('avoid-clicks');
             }
