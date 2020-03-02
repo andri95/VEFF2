@@ -162,19 +162,18 @@
                     }
                     curr.innerHTML = mineCounter;
                 } else {
-                    curr.classList.add('nobomb');
-                    emptySquare(intList, currid);
-                }
-            }
-
-            function emptySquare(intList, currid){
-                for(var i = intList[0] - 1; i <= intList[0] + 1; i++){
-                    for(var j = intList[1] - 1; j <= intList[1] + 1; j++){
-                        var currentElementid = i + ',' + j;
-                        checkNeighbours([i, j], currentElementid);
-                        var currElement = document.getElementById(currentElementid);
-                        currElement.classList.add('nobomb');
+                    for(var i = intList[0] - 1; i <= intList[0] + 1; i++){
+                        for(var j = intList[1] - 1; j <= intList[1] + 1; j++){
+                            var currentElementid = [i, j];
+                            var currElement = document.getElementById(i + ',' + j);
+                            curr.classList.add('nobomb');
+                            if(!currElement.classList.contains('number')){
+                                checkNeighbours(currentElementid, i + ',' + j);
+                            }
+                        }
                     }
+                    
+                    //emptySquare(intList, currid);
                 }
             }
 
