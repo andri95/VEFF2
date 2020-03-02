@@ -24,7 +24,7 @@ function doAjax() {
     validateBoard();
 
     //The URL to which we will send the request
-    url = 'https://veff213-minesweeper.herokuapp.com/api/v1/minesweeper'
+    url = 'https://veff213-minesweeper.herokuapp.com/api/v1/minesweeperr'
 
     //Perform an AJAX POST request to the url, and set the param 'myParam' in the request body to paramValue
     axios.post(url, { rows: board.rows, cols: board.cols, mines: board.mines })
@@ -32,6 +32,28 @@ function doAjax() {
         .catch(function (error) {
             //When unsuccessful, print the error.
             console.log(error);
+            var response = {
+                data: {
+                    board: {
+                        rows: 10,
+                        cols: 10,
+                        mines: 10,
+                        minePositions: {
+                            1: [1, 3],
+                            2: [3, 0],
+                            3: [4, 2],
+                            4: [4, 5],
+                            5: [4, 7],
+                            6: [6, 9],
+                            7: [7, 7],
+                            8: [8, 9],
+                            9: [9, 3],
+                            10: [9, 9]
+                        }
+                    }
+                }
+            }
+            processAjax(response);
         })
         .then(function () {
             // This code is always executed, independent of whether the request succeeds or fails.
@@ -45,13 +67,9 @@ function processAjax(response){
     var displayRows = response.data.board.rows;
     var displayCols = response.data.board.cols;
     var placeMines = response.data.board.minePositions;
-    var mineCount = response.data.board.mines
-    var boardArray = [];
-    var mineArray = [];
-    var tempIdList = [];
     document.getElementById("game").innerHTML = "";
     console.log("MINES ", placeMines);
-    generateBoard()
+    generateBoard();
 
     function generateBoard(){
         for(var i = 0; i <= displayRows - 1; i++){
@@ -62,8 +80,7 @@ function processAjax(response){
                 currentButton.setAttribute('class', 'box');
                 currentButton.addEventListener('click', checkClick, false);
                 currentButton.addEventListener('contextmenu', checkClick, false)
-                container.appendChild(currentButton);
-                boardArray.push([i,j]);   
+                container.appendChild(currentButton); 
             }
             var newLine = document.createElement("br");
             container.appendChild(newLine);
@@ -86,7 +103,7 @@ function processAjax(response){
         if (!currElement.classList.contains('nobomb')){
             if(!currElement.classList.contains('flag') && !currElement.classList.contains('number')){
                 currElement.classList.add('flag');
-                checkWin(intList, boardArray, placeMines);
+                checkWin();
             } else {
                 currElement.classList.remove('flag');
             }
@@ -97,14 +114,12 @@ function processAjax(response){
         var idList = currid.split(',');
         var intList = idList.map(Number);
         var currElement = document.getElementById(currid);
-        if(!currElement.classList.contains('nobomb')){
+        if(!currElement.classList.contains('nobomb') && !currElement.classList.contains('flag')){
             if(isBomb(intList)){
                 revealBombs(placeMines);
             } else {
-                if(!currElement.classList.contains('flag')){
-                    revealSquare(intList, currid);
-                    checkWin(intList, boardArray, placeMines);
-                }
+                revealSquare(intList, currid);
+                checkWin();
             }
         }
     }
@@ -148,12 +163,10 @@ function processAjax(response){
             curr.innerHTML = mineCounter;
         } else {
             curr.classList.add('nobomb');
-            //revealSquare(intList, currid);
         }
     }
 
     function revealSquare(intList){
-        console.log(intList)
         var topL = [intList[0] - 1, intList[1] - 1];
         var top = [intList[0] - 1, intList[1]];
         var topR = [intList[0] - 1, intList[1] + 1];
@@ -195,22 +208,26 @@ function processAjax(response){
         gameContainer.classList.add('avoid-clicks');
     }
 
-    function checkWin(intList, boardArray, placeMines){
-        tempIdList.push(intList);
+    function checkWin(){
         flag = true;
-        if(tempIdList.length === (boardArray.length - placeMines.length)){
-            for(var i = 0; i < placeMines.length; i++){
-                var mine = document.getElementById(placeMines[i][0] + ',' + placeMines[i][1])
-                if (!mine.classList.contains('flag')){
+        for(var i = 0; i < displayRows; i++){
+            for(var j = 0; j < displayCols; j++){
+                if(getElement([i, j]).classList.length === 1){
                     flag = false;
                 }
             }
-            if(flag){
-                setTimeout(function(){ alert("Winner Winner Chicken Dinner"); }, 1000);
-                var gameContainer = document.getElementById('game');
-                gameContainer.classList.add('avoid-clicks');
+        }
+        if(flag){
+            for(var i = 0; i < displayRows; i++){
+                for(var j = 0; j < displayCols; j++){
+                    if(!getElement([i, j]).classList.contains('flag')){
+                        getElement([i, j]).classList.add('win');
+                    }
+                }
             }
+            setTimeout(function(){ alert("YOU WON"); }, 1000);
+            var gameContainer = document.getElementById('game');
+            gameContainer.classList.add('avoid-clicks');
         }
     }
-
 }
