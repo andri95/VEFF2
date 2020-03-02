@@ -8,17 +8,20 @@ function doAjax() {
 
     function validateBoard(){
         // Check if the board is valid
-        var keys = Object.values(board);
-        for(var key of keys){
-            if(isNaN(key) || key > 40){
-                console.log(key);
-                board.rows = 10;
-                board.cols = 10;
-                board.mines = 10;
-                break;
-            } else {
-                continue;
-            }
+        if(isNaN(board.rows) || board.rows > 40){
+            board.rows = 10;
+            board.cols = 10;
+            board.mines = 10;
+        }
+        if(isNaN(board.cols) || board.cols > 40){
+            board.rows = 10;
+            board.cols = 10;
+            board.mines = 10;
+        }
+        if(keys[2] > keys[0] * keys[1]){
+            board.rows = 10;
+            board.cols = 10;
+            board.mines = 10;
         }
     };
     validateBoard();
