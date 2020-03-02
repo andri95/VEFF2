@@ -24,7 +24,7 @@ function doAjax() {
     validateBoard();
 
     //The URL to which we will send the request
-    url = 'https://veff213-minesweeper.herokuapp.com/api/v1/minesweeperr'
+    url = 'https://veff213-minesweeper.herokuapp.com/api/v1/minesweeper'
 
     //Perform an AJAX POST request to the url, and set the param 'myParam' in the request body to paramValue
     axios.post(url, { rows: board.rows, cols: board.cols, mines: board.mines })
@@ -38,18 +38,18 @@ function doAjax() {
                         rows: 10,
                         cols: 10,
                         mines: 10,
-                        minePositions: {
-                            1: [1, 3],
-                            2: [3, 0],
-                            3: [4, 2],
-                            4: [4, 5],
-                            5: [4, 7],
-                            6: [6, 9],
-                            7: [7, 7],
-                            8: [8, 9],
-                            9: [9, 3],
-                            10: [9, 9]
-                        }
+                        minePositions: [
+                            [1, 3],
+                            [3, 0],
+                            [4, 2],
+                            [4, 5],
+                            [4, 7],
+                            [6, 9],
+                            [7, 7],
+                            [8, 9],
+                            [9, 3],
+                            [9, 9]
+                        ]
                     }
                 }
             }
@@ -111,6 +111,7 @@ function processAjax(response){
     }
 
     function processLeftClick(currid){
+        console.log(currid)
         var idList = currid.split(',');
         var intList = idList.map(Number);
         var currElement = document.getElementById(currid);
@@ -213,6 +214,9 @@ function processAjax(response){
         for(var i = 0; i < displayRows; i++){
             for(var j = 0; j < displayCols; j++){
                 if(getElement([i, j]).classList.length === 1){
+                    flag = false;
+                }
+                if(!isBomb([i, j]) && getElement([i, j]).classList.contains('flag')){
                     flag = false;
                 }
             }
