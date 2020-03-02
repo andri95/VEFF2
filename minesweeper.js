@@ -8,17 +8,17 @@ function doAjax() {
 
     // validates inputs, sets default values if not valid
     function validateBoard(){
-        if(isNaN(board.rows) || board.rows > 40){
+        if(isNaN(board.rows) || board.rows > 40 || board.rows === '' || board.rows < 1){
             board.rows = 10;
             board.cols = 10;
             board.mines = 10;
         }
-        if(isNaN(board.cols) || board.cols > 40){
+        if(isNaN(board.cols) || board.cols > 40 || board.cols === '' || board.cols < 1){
             board.rows = 10;
             board.cols = 10;
             board.mines = 10;
         }
-        if(board.mines > board.rows * board.cols){
+        if(board.mines > board.rows * board.cols || board.mines === '' || board.mines < 1){
             board.rows = 10;
             board.cols = 10;
             board.mines = 10;
